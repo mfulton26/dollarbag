@@ -14,6 +14,7 @@ await build({
   entryPoints: await getEntryPoints(),
   outDir,
   shims: { deno: "dev", crypto: "dev" },
+  scriptModule: false,
   importMap: "./deno.json",
   package: {
     name: "dollarbag",
