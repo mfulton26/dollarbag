@@ -1,5 +1,5 @@
 /**
- * Augments `Object.prototype` with `$.let` which can be used to call some function on a value as its argument and then continue with the return value.
+ * Augments `Object.prototype` with {@linkcode $.let} which can be used to call some function on a value as its argument and then continue with the return value.
  *
  * Useful for transforming some value—especially in conjunction with [optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining).
  *
