@@ -1,3 +1,11 @@
+/**
+ * Augments {@linkcode $} with `"let"`.
+ *
+ * @see `Object.prototype[$.let]`
+ *
+ * @module
+ */
+
 import $ from "💰/$.ts";
 
 const value = Symbol("$.let");

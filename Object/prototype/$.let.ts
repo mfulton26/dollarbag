@@ -1,3 +1,31 @@
+/**
+ * Augments `Object.prototype` with {@linkcode $.let} which can be used to call some function on a value as its argument and then continue with the return value.
+ *
+ * Useful for transforming some value—especially in conjunction with [optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining).
+ *
+ * @example
+ *
+ * ```ts
+ * import $ from "💰/$.ts";
+ * import "💰/Object/prototype/$.let.ts";
+ *
+ * function getSpecialRandomNumber() {
+ *   return Math.random()[$.let]((n) => n < 0.5 ? n : n * 10);
+ * }
+ * ```
+ *
+ * instead of
+ *
+ * ```ts
+ * function getSpecialRandomNumber() {
+ *   const n = Math.random();
+ *   return n < 0.5 ? n : n * 10;
+ * }
+ * ```
+ *
+ * @module
+ */
+
 import $ from "💰/$.ts";
 import "💰/$/let.ts";
 
@@ -6,9 +34,11 @@ import "💰/$/let.ts";
  *
  * Useful for transforming some value—especially in conjunction with [optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining).
  *
+ * @example
+ *
  * ```ts
  * import $ from "💰/$.ts";
- * import "💰/Object/prototype/let.ts";
+ * import "💰/Object/prototype/$.let.ts";
  *
  * function getSpecialRandomNumber() {
  *   return Math.random()[$.let]((n) => n < 0.5 ? n : n * 10);
