@@ -1,5 +1,5 @@
 /**
- * Augments `Object.prototype` with {@linkcode $.also} which can be used to call some function on a value as its argument and then continue with the same value.
+ * Augments `Object.prototype` with `$.also` which can be used to call some function on a value as its argument and then continue with the same value.
  *
  * Useful for side operations (e.g. inserting logging statements within a chain of operations).
  *
