@@ -4,12 +4,8 @@ import "💰/$/ONE.ts";
 const value = 1n as bigint;
 
 declare global {
-  interface BigInt {
-    constructor: BigIntConstructor;
-  }
-
   interface BigIntConstructor {
-    [$.ONE]: typeof value;
+    readonly [$.ONE]: typeof value;
   }
 }
 
