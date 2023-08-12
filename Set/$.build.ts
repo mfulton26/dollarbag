@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/build.ts";
-
-function value<T>(generate: () => Iterable<T>): Set<T> {
-  return new Set(generate());
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface SetConstructor {
-    [$.build]: typeof value;
+    [$.build]<T>(generate: () => Iterable<T>): Set<T>;
   }
 }
 
-Object.defineProperty(Set, $.build, { value });
+Object[$.defineDataProperty](
+  Set,
+  $.build,
+  function value(generate) {
+    return new Set(generate());
+  },
+);

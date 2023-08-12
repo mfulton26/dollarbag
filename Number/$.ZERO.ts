@@ -1,12 +1,11 @@
 import $ from "💰/$.ts";
 import "💰/$/ZERO.ts";
-
-const value = 0 as number;
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface NumberConstructor {
-    readonly [$.ZERO]: typeof value;
+    readonly [$.ZERO]: number;
   }
 }
 
-Object.defineProperty(Number, $.ZERO, { value });
+Object[$.defineDataProperty](Number, $.ZERO, 0, "read-only");

@@ -31,7 +31,7 @@ Deno.test("3 to 7 (default step)", async (t) => {
 });
 
 Deno.test("3 to 7 step 1", async (t) => {
-  const progression = (3)[$.to](7, { step: 1 });
+  const progression = (3)[$.to](7, 1);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -58,7 +58,7 @@ Deno.test("3 to 7 step 1", async (t) => {
 });
 
 Deno.test("3 to 7 step 2", async (t) => {
-  const progression = (3)[$.to](7, { step: 2 });
+  const progression = (3)[$.to](7, 2);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -87,7 +87,7 @@ Deno.test("3 to 7 step 2", async (t) => {
 });
 
 Deno.test("3 to 7 step 3", async (t) => {
-  const progression = (3)[$.to](7, { step: 3 });
+  const progression = (3)[$.to](7, 3);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -118,7 +118,7 @@ Deno.test("3 to 7 step 3", async (t) => {
 });
 
 Deno.test("3 to 7 step 4", async (t) => {
-  const progression = (3)[$.to](7, { step: 4 });
+  const progression = (3)[$.to](7, 4);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -151,7 +151,7 @@ Deno.test("3 to 7 step 4", async (t) => {
 });
 
 Deno.test("3 to 7 step 5", async (t) => {
-  const progression = (3)[$.to](7, { step: 5 });
+  const progression = (3)[$.to](7, 5);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -197,7 +197,7 @@ Deno.test("constructor limits", () => {
     "end must have safe precision",
   );
   assertThrows(
-    () => (1)[$.to](10, { step: Number.MIN_VALUE }),
+    () => (1)[$.to](10, Number.MIN_VALUE),
     RangeError,
     "step must have safe precision",
   );

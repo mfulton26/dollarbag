@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/isNegative.ts";
-
-function value(this: bigint) {
-  return this < 0n;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigInt {
-    [$.isNegative]: typeof value;
+    [$.isNegative](): boolean;
   }
 }
 
-Object.defineProperty(BigInt.prototype, $.isNegative, { value });
+Object[$.defineDataProperty](
+  BigInt.prototype,
+  $.isNegative,
+  function(this: bigint) {
+    return this < 0n;
+  },
+);

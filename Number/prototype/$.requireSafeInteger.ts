@@ -1,15 +1,18 @@
 import $ from "💰/$.ts";
 import "💰/$/requireSafeInteger.ts";
-
-function value(this: number, message = `${this} is not a safe integer`) {
-  if (Number.isSafeInteger(this)) return this;
-  throw new RangeError(message);
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.requireSafeInteger]: typeof value;
+    [$.requireSafeInteger](message?: string): number;
   }
 }
 
-Object.defineProperty(Number.prototype, $.requireSafeInteger, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.requireSafeInteger,
+  function value(this: number, message = `${this} is not a safe integer`) {
+    if (Number.isSafeInteger(this)) return this;
+    throw new RangeError(message);
+  },
+);

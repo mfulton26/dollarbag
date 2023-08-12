@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/pow.ts";
-
-function value(this: number, other: number): number {
-  return this ** other;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.pow]: typeof value;
+    [$.pow](other: number): number;
   }
 }
 
-Object.defineProperty(Number.prototype, $.pow, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.pow,
+  function value(this: number, other) {
+    return this ** other;
+  },
+);

@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/requireSafePrecision.ts";
-
-function value(this: bigint) {
-  return this;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigInt {
-    [$.requireSafePrecision]: typeof value;
+    [$.requireSafePrecision](message?: string): bigint;
   }
 }
 
-Object.defineProperty(BigInt.prototype, $.requireSafePrecision, { value });
+Object[$.defineDataProperty](
+  BigInt.prototype,
+  $.requireSafePrecision,
+  function(this: bigint) {
+    return this;
+  },
+);

@@ -1,16 +1,19 @@
 import $ from "💰/$.ts";
 import "💰/$/build.ts";
-
-function value<T>(generate: () => Iterable<T>): string {
-  let result = "";
-  for (const value of generate()) result += value;
-  return result;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface StringConstructor {
-    [$.build]: typeof value;
+    [$.build]<T>(generate: () => Iterable<T>): string;
   }
 }
 
-Object.defineProperty(String, $.build, { value });
+Object[$.defineDataProperty](
+  String,
+  $.build,
+  function value(generate) {
+    let result = "";
+    for (const value of generate()) result += value;
+    return result;
+  },
+);

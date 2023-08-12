@@ -53,18 +53,21 @@ async function createMethodFiles(target: string, name: string) {
     const data = `\
 import $ from "💰/$.ts";
 import "💰/$/${name}.ts";
-
-function value(this: ${self}) {
-  throw new Error("not yet implemented");
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface ${interfaceName} {
-    [$.${name}]: typeof value;
+    [$.${name}](): void;
   }
 }
 
-Object.defineProperty(${target}, $.${name}, { value });
+Object[$.defineDataProperty](
+  ${target},
+  $.${name},
+  function (this: ${self}) {
+    throw new Error("not yet implemented");
+  },
+);
 `;
     await Deno.writeTextFile(path, data, { createNew: true });
   }

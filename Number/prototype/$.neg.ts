@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/neg.ts";
-
-function value(this: number) {
-  return -this;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.neg]: typeof value;
+    [$.neg](): number;
   }
 }
 
-Object.defineProperty(Number.prototype, $.neg, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.neg,
+  function value(this: number) {
+    return -this;
+  },
+);
