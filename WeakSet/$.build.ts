@@ -1,16 +1,19 @@
 import $ from "💰/$.ts";
 import "💰/$/build.ts";
-
-function value<T extends NonNullable<unknown>>(
-  generate: () => Iterable<T>,
-): WeakSet<T> {
-  return new WeakSet(generate());
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface WeakSetConstructor {
-    [$.build]: typeof value;
+    [$.build]<T extends NonNullable<unknown>>(
+      generate: () => Iterable<T>,
+    ): WeakSet<T>;
   }
 }
 
-Object.defineProperty(WeakSet, $.build, { value });
+Object[$.defineDataProperty](
+  WeakSet,
+  $.build,
+  function (generate) {
+    return new WeakSet(generate());
+  },
+);

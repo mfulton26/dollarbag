@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/dec.ts";
-
-function value(this: bigint) {
-  return this - 1n;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigInt {
-    [$.dec]: typeof value;
+    [$.dec](): bigint;
   }
 }
 
-Object.defineProperty(BigInt.prototype, $.dec, { value });
+Object[$.defineDataProperty](
+  BigInt.prototype,
+  $.dec,
+  function(this: bigint) {
+    return this - 1n;
+  },
+);

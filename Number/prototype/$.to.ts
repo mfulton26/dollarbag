@@ -1,18 +1,20 @@
 import $ from "💰/$.ts";
 import "💰/$/to.ts";
+import "💰/Object/$.defineDataProperty.ts";
 
 import "💰/Number/Progression/deps.ts";
-
 import Progression from "💰/Progression.ts";
-
-function value(this: number, end: number, { step }: { step?: number } = {}) {
-  return new Progression(this, end - 1, step);
-}
 
 declare global {
   interface Number {
-    [$.to]: typeof value;
+    [$.to](end: number, step?: number): Progression<number>;
   }
 }
 
-Object.defineProperty(Number.prototype, $.to, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.to,
+  function value(this: number, end, step) {
+    return new Progression(this, end - 1, step);
+  },
+);

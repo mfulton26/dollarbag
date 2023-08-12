@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/build.ts";
-
-function value<T>(generate: () => Iterable<T> | ArrayLike<T>): T[] {
-  return Array.from(generate());
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface ArrayConstructor {
-    [$.build]: typeof value;
+    [$.build]<T>(generate: () => Iterable<T> | ArrayLike<T>): T[];
   }
 }
 
-Object.defineProperty(Array, $.build, { value });
+Object[$.defineDataProperty](
+  Array,
+  $.build,
+  function (generate) {
+    return Array.from(generate());
+  },
+);

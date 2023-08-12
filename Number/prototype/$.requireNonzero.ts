@@ -1,15 +1,18 @@
 import $ from "💰/$.ts";
 import "💰/$/requireNonzero.ts";
-
-function value(this: number, message = "this is zero") {
-  if (this === 0) throw new RangeError(message);
-  return this;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.requireNonzero]: typeof value;
+    [$.requireNonzero](message?: string): number;
   }
 }
 
-Object.defineProperty(Number.prototype, $.requireNonzero, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.requireNonzero,
+  function value(this: number, message = "this is zero") {
+    if (this === 0) throw new RangeError(message);
+    return this;
+  },
+);

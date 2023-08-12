@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/build.ts";
-
-function value<K, V>(generate: () => Iterable<readonly [K, V]>): Map<K, V> {
-  return new Map(generate());
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface MapConstructor {
-    [$.build]: typeof value;
+    [$.build]<K, V>(generate: () => Iterable<readonly [K, V]>): Map<K, V>;
   }
 }
 
-Object.defineProperty(Map, $.build, { value });
+Object[$.defineDataProperty](
+  Map,
+  $.build,
+  function value<K, V>(generate: () => Iterable<readonly [K, V]>) {
+    return new Map(generate());
+  },
+);

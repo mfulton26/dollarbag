@@ -31,7 +31,7 @@ Deno.test("3 to 7 (default step)", async (t) => {
 });
 
 Deno.test("3 to 7 step 1", async (t) => {
-  const progression = (3n)[$.to](7n, { step: 1n });
+  const progression = (3n)[$.to](7n, 1n);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -58,7 +58,7 @@ Deno.test("3 to 7 step 1", async (t) => {
 });
 
 Deno.test("3 to 7 step 2", async (t) => {
-  const progression = (3n)[$.to](7n, { step: 2n });
+  const progression = (3n)[$.to](7n, 2n);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -87,7 +87,7 @@ Deno.test("3 to 7 step 2", async (t) => {
 });
 
 Deno.test("3 to 7 step 3", async (t) => {
-  const progression = (3n)[$.to](7n, { step: 3n });
+  const progression = (3n)[$.to](7n, 3n);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -118,7 +118,7 @@ Deno.test("3 to 7 step 3", async (t) => {
 });
 
 Deno.test("3 to 7 step 4", async (t) => {
-  const progression = (3n)[$.to](7n, { step: 4n });
+  const progression = (3n)[$.to](7n, 4n);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {
@@ -151,7 +151,7 @@ Deno.test("3 to 7 step 4", async (t) => {
 });
 
 Deno.test("3 to 7 step 5", async (t) => {
-  const progression = (3n)[$.to](7n, { step: 5n });
+  const progression = (3n)[$.to](7n, 5n);
 
   await t.step("has", async (t) => {
     function expect(expected: boolean) {

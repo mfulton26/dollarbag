@@ -1,16 +1,19 @@
 import $ from "💰/$.ts";
 import "💰/$/build.ts";
-
-function value<K extends NonNullable<unknown>, V>(
-  generate: () => Iterable<readonly [K, V]>,
-): WeakMap<K, V> {
-  return new WeakMap(generate());
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface WeakMapConstructor {
-    [$.build]: typeof value;
+    [$.build]<K extends NonNullable<unknown>, V>(
+      generate: () => Iterable<readonly [K, V]>,
+    ): WeakMap<K, V>;
   }
 }
 
-Object.defineProperty(WeakMap, $.build, { value });
+Object[$.defineDataProperty](
+  WeakMap,
+  $.build,
+  function (generate) {
+    return new WeakMap(generate());
+  },
+);

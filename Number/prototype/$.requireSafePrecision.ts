@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/requireSafePrecision.ts";
+import "💰/Object/$.defineDataProperty.ts";
 
 import "💰/Number/prototype/$.requireSafeInteger.ts";
 
-const value = Number.prototype[$.requireSafeInteger];
-
 declare global {
   interface Number {
-    [$.requireSafePrecision]: typeof value;
+    [$.requireSafePrecision](message?: string): number;
   }
 }
 
-Object.defineProperty(Number.prototype, $.requireSafePrecision, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.requireSafePrecision,
+  Number.prototype[$.requireSafeInteger],
+);
