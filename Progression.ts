@@ -2,6 +2,9 @@ import $ from "💰/$.ts";
 
 import * as Iterator from "💰/Iterator.ts";
 
+/**
+ * Represents the required methods and properties to support progression.
+ */
 export interface Progressable<T> {
   constructor: { [$.ZERO]: T; [$.ONE]: T };
   [$.add](value: T): T;
@@ -39,6 +42,9 @@ const lasts = new WeakMap<Progression<any>, unknown>();
 // deno-lint-ignore no-explicit-any
 const steps = new WeakMap<Progression<any>, unknown>();
 
+/**
+ * A progression of values. Can be used directly or, more conveniently, through `[$.through]()` and `[$.to]()`.
+ */
 export default class Progression<T extends Progressable<T>> {
   /**
    * Calculates the last item of a bounded arithmetic progression.
@@ -83,14 +89,32 @@ export default class Progression<T extends Progressable<T>> {
     return "Progression";
   }
 
+  /**
+   * The first item in the progression.
+   *
+   * @returns the `start` value specified when constructing the progression
+   */
   get first(): T {
     return firsts.get(this) as T;
   }
 
+  /**
+   * The last item in the progression.
+   *
+   * @returns the value that comes closest to the `end` value specified when constructing the progression when progressing from `first` by `step`
+   *
+   * This can be the `end` value itself if the value is part of the progression or an earlier value.
+   * e.g. `0 through 10 step 3` becomes `0 through 9 step 3` because 10 is not evenly divisible by 3.
+   */
   get last(): T {
     return lasts.get(this) as T;
   }
 
+  /**
+   * The step of progression.
+   *
+   * @returns a negative value for descending progressions, otherwise a positive value
+   */
   get step(): T {
     return steps.get(this) as T;
   }
@@ -100,6 +124,9 @@ export default class Progression<T extends Progressable<T>> {
     return `${this.constructor.name} { ${this.first} through ${this.last} step ${this.step} }`;
   }
 
+  /**
+   * @returns an iterable of the values in the progression
+   */
   [Symbol.iterator](): IterableIterator<T> {
     let { first: value } = this;
     const { last, step } = this;
@@ -114,6 +141,9 @@ export default class Progression<T extends Progressable<T>> {
     return Iterator.from({ next });
   }
 
+  /**
+   * @returns an iterable of [v,v] pairs for every value `v` in the progression
+   */
   entries(): IterableIterator<[T, T]> {
     const iterator = this[Symbol.iterator]();
     const next = (): IteratorResult<[T, T]> => {
@@ -124,6 +154,9 @@ export default class Progression<T extends Progressable<T>> {
     return Iterator.from({ next });
   }
 
+  /**
+   * @returns a boolean indicating whether a specified value exists in the progression or not
+   */
   has(value: T): boolean {
     const { first, last, step } = this;
     return (
@@ -134,6 +167,9 @@ export default class Progression<T extends Progressable<T>> {
     );
   }
 
+  /**
+   * @returns, despite its name, an iterable of the values in the progression
+   */
   keys(): IterableIterator<T> {
     throw new Error("not yet implemented");
   }
@@ -141,6 +177,9 @@ export default class Progression<T extends Progressable<T>> {
     Progression.prototype.keys = Progression.prototype[Symbol.iterator];
   }
 
+  /**
+   * @returns an iterable of the values in the progression
+   */
   values(): IterableIterator<T> {
     throw new Error("not yet implemented");
   }
