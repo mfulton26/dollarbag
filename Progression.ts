@@ -134,7 +134,17 @@ export default class Progression<T extends Progressable<T>> {
     );
   }
 
-  keys = this[Symbol.iterator];
+  keys(): IterableIterator<T> {
+    throw new Error("not yet implemented");
+  }
+  static {
+    Progression.prototype.keys = Progression.prototype[Symbol.iterator];
+  }
 
-  values = this[Symbol.iterator];
+  values(): IterableIterator<T> {
+    throw new Error("not yet implemented");
+  }
+  static {
+    Progression.prototype.values = Progression.prototype[Symbol.iterator];
+  }
 }
