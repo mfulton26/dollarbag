@@ -59,20 +59,14 @@ declare global {
      * }
      * ```
      */
-    [$.also]<T extends NonNullable<unknown>>(
-      this: T,
-      action: (value: T) => void,
-    ): T;
+    [$.also]<T>(this: T, action: (value: T) => void): T;
   }
 }
 
 Object[$.defineDataProperty](
   Object.prototype,
   $.also,
-  function value<T extends NonNullable<unknown>>(
-    this: T,
-    action: (value: T) => void,
-  ) {
+  function value<T>(this: T, action: (value: T) => void) {
     action(this);
     return this;
   },
