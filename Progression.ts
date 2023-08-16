@@ -1,4 +1,5 @@
 import $ from "💰/$.ts";
+import "💰/Object/prototype/$.toBigInt.ts";
 
 import * as Iterator from "💰/Iterator.ts";
 
@@ -41,6 +42,8 @@ const firsts = new WeakMap<Progression<any>, unknown>();
 const lasts = new WeakMap<Progression<any>, unknown>();
 // deno-lint-ignore no-explicit-any
 const steps = new WeakMap<Progression<any>, unknown>();
+// deno-lint-ignore no-explicit-any
+const sizes = new WeakMap<Progression<any>, number>();
 
 /**
  * A progression of values. Can be used directly or, more conveniently, through `[$.through]()` and `[$.to]()`.
@@ -75,7 +78,7 @@ export default class Progression<T extends Progressable<T>> {
     step = step?.[$.requireNonzero]("step must be nonzero")
       [$.requireSafePrecision]("step must have safe precision") ??
       (end[$.requireSafePrecision]("end must have safe precision")
-          [$.sub](start)[$.compareTo](start.constructor[$.ZERO]) > 0
+          [$.sub](start)[$.compareTo](start.constructor[$.ZERO]) >= 0
         ? start.constructor[$.ONE]
         : start.constructor[$.ONE][$.neg]());
     const last = computeLast(first, end, step);
@@ -119,6 +122,24 @@ export default class Progression<T extends Progressable<T>> {
     return steps.get(this) as T;
   }
 
+  /**
+   * The number of items in the progression.
+   *
+   * @returns an integer as long as precision is not lost, otherwise `NaN`
+   */
+  get size(): number {
+    const memoizedResult = sizes.get(this);
+    if (memoizedResult !== undefined) return memoizedResult;
+    const trueSize = 1n + (this.last[$.toBigInt]() - this.first[$.toBigInt]()) /
+        this.step[$.toBigInt]();
+    const number = Number(trueSize);
+    const result = Number.isSafeInteger(number) || BigInt(number) === trueSize
+      ? number
+      : NaN;
+    sizes.set(this, result);
+    return result;
+  }
+
   [Symbol.for("Deno.customInspect")](): string {
     // todo: use incoming `inspect` and `options` arguments to properly indent, wrap content, etc.
     return `${this.constructor.name} { ${this.first} through ${this.last} step ${this.step} }`;
@@ -152,6 +173,20 @@ export default class Progression<T extends Progressable<T>> {
       return { value: [value, value], done: false };
     };
     return Iterator.from({ next });
+  }
+
+  // todo: implement tests for `forEach()`
+  /**
+   * Executes a provided function once per each value in the progression object, in step order.
+   */
+  forEach(
+    callbackfn: (value: T, value2: T, progression: Progression<T>) => void,
+    thisArg: unknown = undefined,
+  ): void {
+    const { first, last, step } = this;
+    for (let value = first; value !== last; value = value[$.add](step)) {
+      callbackfn.call(thisArg, value, value, this);
+    }
   }
 
   /**
