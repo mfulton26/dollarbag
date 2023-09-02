@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.abs,
-  function (this: number) {
-    return Math.abs(this);
+  function () {
+    return Math.abs(this.valueOf());
   },
 );

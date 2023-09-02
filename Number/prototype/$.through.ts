@@ -14,7 +14,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.through,
-  function value(this: number, end, step) {
-    return new Progression(this, end, step);
+  function (end, step) {
+    return new Progression(this.valueOf(), end, step);
   },
 );

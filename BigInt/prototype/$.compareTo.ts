@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   BigInt.prototype,
   $.compareTo,
-  function (this: bigint, other) {
-    return Number(this - other);
+  function (other) {
+    return Number(this.valueOf() - other);
   },
 );

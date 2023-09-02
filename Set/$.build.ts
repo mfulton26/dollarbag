@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Set,
   $.build,
-  function value(generate) {
+  function (generate) {
     return new Set(generate());
   },
 );

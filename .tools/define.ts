@@ -64,7 +64,7 @@ declare global {
 Object[$.defineDataProperty](
   ${target},
   $.${name},
-  function (this: ${self}) {
+  function () {
     throw new Error("not yet implemented");
   },
 );
