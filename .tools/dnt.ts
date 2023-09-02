@@ -3,8 +3,11 @@ import { getEntryPoints } from "💰/.tools/dnt/entryPoints.ts";
 
 import * as semver from "std/semver/mod.ts";
 
-const version = semver.valid(Deno.args[0]);
-if (!version) throw new SyntaxError("valid semver must be specified");
+console.log(semver.parse("1.2.3"));
+
+const [version] = Deno.args;
+if (!version) throw new SyntaxError("version arg required");
+semver.parse(version);
 
 const outDir = "./node";
 
