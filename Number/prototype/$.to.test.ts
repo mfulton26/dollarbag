@@ -187,7 +187,7 @@ Deno.test("3 to 7 step 5", async (t) => {
 
 Deno.test("constructor limits", () => {
   assertThrows(
-    () => (Number.NEGATIVE_INFINITY)[$.to](12),
+    () => Number.NEGATIVE_INFINITY[$.to](12),
     RangeError,
     "start must have safe precision",
   );
