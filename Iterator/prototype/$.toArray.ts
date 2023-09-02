@@ -13,7 +13,7 @@ declare global {
 Object[$.defineDataProperty](
   Iterator.prototype,
   $.toArray,
-  function value<T>(this: Iterator<T>) {
+  function <T>(this: Iterator<T>) {
     const result: T[] = [];
     for (
       let { done, value } = this.next();
