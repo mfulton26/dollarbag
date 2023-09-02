@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   BigInt.prototype,
   $.requireNonzero,
-  function(this: bigint, message = "this is zero") {
+  function (this: bigint, message = "this is zero") {
     if (this === 0n) throw new RangeError(message);
     return this;
   },
