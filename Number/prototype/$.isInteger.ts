@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.isInteger,
-  function () {
+  function value(this: number) {
     return Number.isInteger(this);
   },
 );

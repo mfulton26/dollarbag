@@ -14,7 +14,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.to,
-  function (end, step) {
-    return new Progression(this.valueOf(), end - 1, step);
+  function value(this: number, end, step) {
+    return new Progression(this, end - 1, step);
   },
 );

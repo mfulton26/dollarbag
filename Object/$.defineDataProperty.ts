@@ -6,10 +6,7 @@ declare global {
     [$.defineDataProperty]<T, K extends keyof T>(
       target: T,
       propertyKey: K,
-      // deno-lint-ignore no-explicit-any
-      value: T[K] extends (...args: any) => any
-        ? (this: T, ...args: Parameters<T[K]>) => ReturnType<T[K]>
-        : T[K],
+      value: T[K],
       variant?: "read-only",
     ): T;
   }
@@ -25,10 +22,7 @@ writableDescriptor.writable = true;
 function defineDataProperty<T, K extends keyof T>(
   target: T,
   propertyKey: K,
-  // deno-lint-ignore no-explicit-any
-  value: T[K] extends (...args: any) => any
-    ? (this: T, ...args: Parameters<T[K]>) => ReturnType<T[K]>
-    : T[K],
+  value: T[K],
   variant?: "read-only",
 ): T {
   const descriptor = variant === "read-only"

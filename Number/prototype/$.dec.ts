@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.dec,
-  function () {
-    return this.valueOf() - 1;
+  function value(this: number) {
+    return this - 1;
   },
 );

@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Date.prototype,
   $.compareTo,
-  function (other) {
+  function value(this: Date, other) {
     return this.valueOf() - other.valueOf();
   },
 );

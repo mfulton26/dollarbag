@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Map,
   $.build,
-  function <K, V>(generate: () => Iterable<readonly [K, V]>) {
+  function value<K, V>(generate: () => Iterable<readonly [K, V]>) {
     return new Map(generate());
   },
 );

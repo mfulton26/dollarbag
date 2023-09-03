@@ -13,7 +13,7 @@ declare global {
 Object[$.defineDataProperty](
   TypedArray,
   $.build,
-  function <R extends TypedArray<T>, T>(
+  function value<R extends TypedArray<T>, T>(
     this: TypedArrayConstructor<R, T>,
     generate: () => Iterable<T>,
   ): R {
