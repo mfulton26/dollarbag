@@ -11,8 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.isPositive,
-  function () {
-    const value = this.valueOf();
-    return Object.is(value, 0) || value > 0;
+  function value(this: number) {
+    return Object.is(this, 0) || this > 0;
   },
 );

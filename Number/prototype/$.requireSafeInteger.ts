@@ -11,9 +11,8 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.requireSafeInteger,
-  function (message) {
-    const value = this.valueOf();
-    if (Number.isSafeInteger(value)) return value;
-    throw new RangeError(message ?? `${value} is not a safe integer`);
+  function value(this: number, message = `${this} is not a safe integer`) {
+    if (Number.isSafeInteger(this)) return this;
+    throw new RangeError(message);
   },
 );

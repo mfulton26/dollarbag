@@ -11,9 +11,8 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.requireNonzero,
-  function (message = "this is zero") {
-    const value = this.valueOf();
-    if (value === 0) throw new RangeError(message);
-    return value;
+  function value(this: number, message = "this is zero") {
+    if (this === 0) throw new RangeError(message);
+    return this;
   },
 );

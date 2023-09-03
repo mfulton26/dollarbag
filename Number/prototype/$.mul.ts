@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Number.prototype,
   $.mul,
-  function (other) {
-    return this.valueOf() * other;
+  function value(this: number, other) {
+    return this * other;
   },
 );

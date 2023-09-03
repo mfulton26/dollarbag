@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   BigInt.prototype,
   $.mul,
-  function (other) {
-    return this.valueOf() * other;
+  function (this: bigint, other) {
+    return this * other;
   },
 );

@@ -14,7 +14,7 @@ declare global {
 Object[$.defineDataProperty](
   Iterator.prototype,
   $.toAsync,
-  function <T>(this: Iterator<T>) {
+  function value<T>(this: Iterator<T>) {
     return AsyncIterator.from({ next: () => Promise.resolve(this.next()) });
   },
 );
