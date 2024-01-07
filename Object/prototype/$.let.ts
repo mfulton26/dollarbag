@@ -57,20 +57,14 @@ declare global {
      * }
      * ```
      */
-    [$.let]<T extends NonNullable<unknown>, R>(
-      this: T,
-      transform: (value: T) => R,
-    ): R;
+    [$.let]<T, R>(this: T, transform: (value: T) => R): R;
   }
 }
 
 Object[$.defineDataProperty](
   Object.prototype,
   $.let,
-  function value<T extends NonNullable<unknown>, R>(
-    this: T,
-    transform: (value: T) => R,
-  ) {
+  function value<T, R>(this: T, transform: (value: T) => R) {
     return transform(this);
   },
 );
