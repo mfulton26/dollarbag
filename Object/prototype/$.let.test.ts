@@ -1,5 +1,5 @@
 import $ from "💰/$.ts";
-import "💰/Object/prototype/let.ts";
+import "💰/Object/prototype/$.let.ts";
 
 import { assertEquals } from "std/testing/asserts.ts";
 
