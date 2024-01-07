@@ -39,14 +39,16 @@ Object.defineProperty($, "${name}", { value });
 }
 
 async function createMethodFiles(target: string, name: string) {
-  const path = `${target.replaceAll(".", "/")}/$.${name}.ts`;
-  const testPath = path.replace(/\.ts$/, ".test.ts");
+  const dirPath = `${target.replaceAll(".", "/")}`;
+  const path = `${dirPath}/$.${name}.ts`;
+  const testPath = `${dirPath}/$.${name}.test.ts`;
   const interfaceName = target.endsWith(".prototype")
     ? target.slice(0, -".prototype".length)
     : `${target}Constructor`;
   const self = isPrimitiveInterfaceName(interfaceName)
     ? interfaceName.toLowerCase()
     : interfaceName;
+  await Deno.mkdir(dirPath, { recursive: true });
   {
     const data = `\
 import $ from "💰/$.ts";
