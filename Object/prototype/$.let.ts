@@ -64,7 +64,7 @@ declare global {
 Object[$.defineDataProperty](
   Object.prototype,
   $.let,
-  function value<T, R>(this: T, transform: (value: T) => R) {
+  function <T, R>(this: T, transform: (value: T) => R) {
     return transform(this);
   },
 );

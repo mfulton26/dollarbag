@@ -11,8 +11,9 @@ declare global {
 Object[$.defineDataProperty](
   BigInt.prototype,
   $.abs,
-  function (this: bigint) {
-    if (this < 0n) return -this;
-    return this;
+  function () {
+    const value = this.valueOf();
+    if (value < 0n) return -value;
+    return value;
   },
 );

@@ -11,7 +11,8 @@ declare global {
 Object[$.defineDataProperty](
   String.prototype,
   $.compareTo,
-  function value(this: string, other) {
-    return this === other ? 0 : this < other ? -1 : 1;
+  function (other) {
+    const value = this.valueOf();
+    return value === other ? 0 : value < other ? -1 : 1;
   },
 );

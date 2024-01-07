@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Boolean.prototype,
   $.compareTo,
-  function (this: boolean, other) {
+  function (other) {
     return Number(this) - Number(other);
   },
 );

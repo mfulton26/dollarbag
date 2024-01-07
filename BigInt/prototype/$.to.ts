@@ -14,7 +14,7 @@ declare global {
 Object[$.defineDataProperty](
   BigInt.prototype,
   $.to,
-  function (this: bigint, end, step) {
-    return new Progression(this, end - 1n, step);
+  function (end, step) {
+    return new Progression(this.valueOf(), end - 1n, step);
   },
 );

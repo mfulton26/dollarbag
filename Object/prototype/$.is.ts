@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Object.prototype,
   $.is,
-  function value<T>(this: T, that: T) {
+  function <T>(this: T, that: T) {
     return Object.is(this, that);
   },
 );

@@ -13,7 +13,7 @@ declare global {
 Object[$.defineDataProperty](
   String.prototype,
   $.lineIterator,
-  function value(this: string) {
+  function () {
     const { length } = this;
     let start = 0;
     const next = (): IteratorResult<string> => {

@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Object.prototype,
   $.toBigInt,
-  function (this: unknown) {
+  function () {
     // deno-lint-ignore no-explicit-any
     return BigInt(this as any);
   },
