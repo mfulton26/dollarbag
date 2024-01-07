@@ -32,6 +32,13 @@ function computeLast<T extends Progressable<T>>(start: T, end: T, step: T): T {
   return end[$.add](subMod(start, end, step[$.neg]()));
 }
 
+// deno-lint-ignore no-explicit-any
+const firsts = new WeakMap<Progression<any>, unknown>();
+// deno-lint-ignore no-explicit-any
+const lasts = new WeakMap<Progression<any>, unknown>();
+// deno-lint-ignore no-explicit-any
+const steps = new WeakMap<Progression<any>, unknown>();
+
 export default class Progression<T extends Progressable<T>> {
   /**
    * Calculates the last item of a bounded arithmetic progression.
@@ -54,59 +61,60 @@ export default class Progression<T extends Progressable<T>> {
     );
   }
 
-  readonly #first: T;
-  readonly #last: T;
-  readonly #step: T;
-
   constructor(start: T, end: T, step?: T) {
-    this.#last = computeLast(
-      this.#first = start[$.requireSafePrecision](
-        "start must have safe precision",
-      ),
-      end[$.requireSafePrecision]("end must have safe precision"),
-      this.#step = step?.[$.requireNonzero]("step must be nonzero")
-        [$.requireSafePrecision]("step must have safe precision") ??
-        (end[$.sub](start)[$.compareTo](start.constructor[$.ZERO]) > 0
-          ? start.constructor[$.ONE]
-          : start.constructor[$.ONE][$.neg]()),
+    const first = start[$.requireSafePrecision](
+      "start must have safe precision",
     );
+    // fixme: add default step tests
+    step = step?.[$.requireNonzero]("step must be nonzero")
+      [$.requireSafePrecision]("step must have safe precision") ??
+      (end[$.requireSafePrecision]("end must have safe precision")
+          [$.sub](start)[$.compareTo](start.constructor[$.ZERO]) > 0
+        ? start.constructor[$.ONE]
+        : start.constructor[$.ONE][$.neg]());
+    const last = computeLast(first, end, step);
+
+    firsts.set(this, first);
+    lasts.set(this, last);
+    steps.set(this, step);
   }
 
-  get [Symbol.toStringTag]() {
+  get [Symbol.toStringTag](): string {
     return "Progression";
   }
 
-  get first() {
-    return this.#first;
+  get first(): T {
+    return firsts.get(this) as T;
   }
 
-  get last() {
-    return this.#last;
+  get last(): T {
+    return lasts.get(this) as T;
   }
 
-  get step() {
-    return this.#step;
+  get step(): T {
+    return steps.get(this) as T;
   }
 
-  [Symbol.for("Deno.customInspect")]() {
+  [Symbol.for("Deno.customInspect")](): string {
     // todo: use incoming `inspect` and `options` arguments to properly indent, wrap content, etc.
-    return `${this.constructor.name} { ${this.#first} through ${this.#last} step ${this.#step} }`;
+    return `${this.constructor.name} { ${this.first} through ${this.last} step ${this.step} }`;
   }
 
-  [Symbol.iterator]() {
-    let value = this.#first;
+  [Symbol.iterator](): IterableIterator<T> {
+    let { first: value } = this;
+    const { last, step } = this;
     let done = false;
     const next = (): IteratorResult<T> => {
       if (done) return { value: undefined, done: true };
       const result = { value, done: false };
-      done = value[$.compareTo](this.#last) === 0;
-      if (!done) value = value[$.add](this.#step);
+      done = value[$.compareTo](last) === 0;
+      if (!done) value = value[$.add](step);
       return result;
     };
     return Iterator.from({ next });
   }
 
-  entries() {
+  entries(): IterableIterator<[T, T]> {
     const iterator = this[Symbol.iterator]();
     const next = (): IteratorResult<[T, T]> => {
       const { value, done } = iterator.next();
@@ -117,10 +125,11 @@ export default class Progression<T extends Progressable<T>> {
   }
 
   has(value: T): boolean {
+    const { first, last, step } = this;
     return (
-      value[$.compareTo](this.#first) >= 0 &&
-      value[$.compareTo](this.#last) <= 0 &&
-      value[$.sub](this.#first)[$.mod](this.#step)
+      value[$.compareTo](first) >= 0 &&
+      value[$.compareTo](last) <= 0 &&
+      value[$.sub](first)[$.mod](step)
           [$.compareTo](value.constructor[$.ZERO]) === 0
     );
   }
