@@ -2,12 +2,12 @@
   "exclude": ["node/"],
   "imports": {
     "💰/": "./",
-    "dnt": "https://deno.land/x/dnt@0.37.0/mod.ts",
-    "std/": "https://deno.land/std@0.191.0/"
+    "dnt": "https://deno.land/x/dnt@0.38.1/mod.ts",
+    "std/": "https://deno.land/std@0.201.0/"
   },
   "tasks": {
     "define": "deno run --allow-write=. --allow-run=open .tools/define.ts",
-    "dnt": "deno run --allow-read --allow-write --allow-net=deno.land --allow-env=DENO_AUTH_TOKENS,DENO_DIR,HOME,XDG_CACHE_HOME  --allow-run=npm .tools/dnt.ts",
+    "dnt": "deno run --allow-read --allow-write --allow-net=deno.land --allow-env=DENO_AUTH_TOKENS,DENO_DIR,HOME,XDG_CACHE_HOME --allow-run=npm --no-lock .tools/dnt.ts",
     "test": "deno test --doc --parallel"
   }
 }
