@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/compareTo.ts";
-
-function value(this: bigint, other: bigint): number {
-  return Number(this - other);
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigInt {
-    [$.compareTo]: typeof value;
+    [$.compareTo](other: bigint): number;
   }
 }
 
-Object.defineProperty(BigInt.prototype, $.compareTo, { value });
+Object[$.defineDataProperty](
+  BigInt.prototype,
+  $.compareTo,
+  function (this: bigint, other) {
+    return Number(this - other);
+  },
+);

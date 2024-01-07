@@ -1,24 +1,27 @@
 import $ from "💰/$.ts";
 import "💰/$/toArray.ts";
+import "💰/Object/$.defineDataProperty.ts";
 
 import * as AsyncIterator from "💰/AsyncIterator.ts";
 
-async function value<T>(this: AsyncIterator<T>): Promise<T[]> {
-  const result: T[] = [];
-  for (
-    let { done, value } = await this.next();
-    !done;
-    ({ done, value } = await this.next())
-  ) {
-    result.push(value);
-  }
-  return result;
-}
-
 declare global {
   interface AsyncIterator<T> {
-    [$.toArray]: typeof value;
+    [$.toArray](): Promise<T[]>;
   }
 }
 
-Object.defineProperty(AsyncIterator.prototype, $.toArray, { value });
+Object[$.defineDataProperty](
+  AsyncIterator.prototype,
+  $.toArray,
+  async function <T>(this: AsyncIterator<T>) {
+    const result: T[] = [];
+    for (
+      let { done, value } = await this.next();
+      !done;
+      ({ done, value } = await this.next())
+    ) {
+      result.push(value);
+    }
+    return result;
+  },
+);

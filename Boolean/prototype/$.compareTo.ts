@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/compareTo.ts";
-
-function value(this: boolean, other: boolean): number {
-  return Number(this) - Number(other);
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Boolean {
-    [$.compareTo]: typeof value;
+    [$.compareTo](other: boolean): number;
   }
 }
 
-Object.defineProperty(Boolean.prototype, $.compareTo, { value });
+Object[$.defineDataProperty](
+  Boolean.prototype,
+  $.compareTo,
+  function (this: boolean, other) {
+    return Number(this) - Number(other);
+  },
+);

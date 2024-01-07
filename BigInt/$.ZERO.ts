@@ -1,12 +1,11 @@
 import $ from "💰/$.ts";
 import "💰/$/ZERO.ts";
-
-const value = 0n as bigint;
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigIntConstructor {
-    readonly [$.ZERO]: typeof value;
+    readonly [$.ZERO]: bigint;
   }
 }
 
-Object.defineProperty(BigInt, $.ZERO, { value });
+Object[$.defineDataProperty](BigInt, $.ZERO, 0n, "read-only");

@@ -1,17 +1,20 @@
 import $ from "💰/$.ts";
 import "💰/$/toAsync.ts";
+import "💰/Object/$.defineDataProperty.ts";
 
 import * as AsyncIterator from "💰/AsyncIterator.ts";
 import * as Iterator from "💰/Iterator.ts";
 
-function value<T>(this: Iterator<T>): AsyncIterableIterator<T> {
-  return AsyncIterator.from({ next: () => Promise.resolve(this.next()) });
-}
-
 declare global {
   interface Iterator<T> {
-    [$.toAsync]: typeof value;
+    [$.toAsync](): AsyncIterableIterator<T>;
   }
 }
 
-Object.defineProperty(Iterator.prototype, $.toAsync, { value });
+Object[$.defineDataProperty](
+  Iterator.prototype,
+  $.toAsync,
+  function value<T>(this: Iterator<T>) {
+    return AsyncIterator.from({ next: () => Promise.resolve(this.next()) });
+  },
+);

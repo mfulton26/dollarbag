@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/compareTo.ts";
-
-function value(this: number, other: number): number {
-  return this === other ? 0 : this - other;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.compareTo]: typeof value;
+    [$.compareTo](other: number): number;
   }
 }
 
-Object.defineProperty(Number.prototype, $.compareTo, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.compareTo,
+  function value(this: number, other) {
+    return this === other ? 0 : this - other;
+  },
+);

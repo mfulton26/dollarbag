@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/is.ts";
-
-function value<T extends NonNullable<unknown>>(this: T, that: T) {
-  return Object.is(this, that);
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Object {
-    [$.is]: typeof value;
+    [$.is]<T extends NonNullable<unknown>>(this: T, that: T): boolean;
   }
 }
 
-Object.defineProperty(Object.prototype, $.is, { value });
+Object[$.defineDataProperty](
+  Object.prototype,
+  $.is,
+  function value<T extends NonNullable<unknown>>(this: T, that: T) {
+    return Object.is(this, that);
+  },
+);

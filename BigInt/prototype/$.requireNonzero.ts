@@ -1,15 +1,18 @@
 import $ from "💰/$.ts";
 import "💰/$/requireNonzero.ts";
-
-function value(this: bigint, message = "this is zero") {
-  if (this === 0n) throw new RangeError(message);
-  return this;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigInt {
-    [$.requireNonzero]: typeof value;
+    [$.requireNonzero](message?: string): bigint;
   }
 }
 
-Object.defineProperty(BigInt.prototype, $.requireNonzero, { value });
+Object[$.defineDataProperty](
+  BigInt.prototype,
+  $.requireNonzero,
+  function(this: bigint, message = "this is zero") {
+    if (this === 0n) throw new RangeError(message);
+    return this;
+  },
+);
