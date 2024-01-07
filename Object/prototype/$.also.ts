@@ -66,7 +66,7 @@ declare global {
 Object[$.defineDataProperty](
   Object.prototype,
   $.also,
-  function value<T>(this: T, action: (value: T) => void) {
+  function <T>(this: T, action: (value: T) => void) {
     action(this);
     return this;
   },

@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Object.prototype,
   $.takeUnless,
-  function (this, predicate) {
+  function (predicate) {
     if (predicate(this)) return undefined;
     return this;
   },

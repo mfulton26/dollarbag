@@ -11,7 +11,7 @@ declare global {
 Object[$.defineDataProperty](
   Object.prototype,
   $.toNumber,
-  function (this: unknown) {
+  function () {
     try {
       return Number(this);
     } catch {
