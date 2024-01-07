@@ -6,6 +6,7 @@
     "std/": "https://deno.land/std@0.191.0/"
   },
   "tasks": {
+    "define": "deno run --allow-write=. --allow-run=open .tools/define.ts",
     "dnt": "deno run --allow-read --allow-write --allow-net=deno.land --allow-env=DENO_AUTH_TOKENS,DENO_DIR,HOME,XDG_CACHE_HOME  --allow-run=npm .tools/dnt.ts",
     "test": "deno test --doc"
   }
