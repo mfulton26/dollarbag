@@ -1,24 +1,27 @@
 import $ from "💰/$.ts";
 import "💰/$/toArray.ts";
+import "💰/Object/$.defineDataProperty.ts";
 
 import * as Iterator from "💰/Iterator.ts";
 
-function value<T>(this: Iterator<T>): T[] {
-  const result: T[] = [];
-  for (
-    let { done, value } = this.next();
-    !done;
-    ({ done, value } = this.next())
-  ) {
-    result.push(value);
-  }
-  return result;
-}
-
 declare global {
   interface Iterator<T> {
-    [$.toArray]: typeof value;
+    [$.toArray](): T[];
   }
 }
 
-Object.defineProperty(Iterator.prototype, $.toArray, { value });
+Object[$.defineDataProperty](
+  Iterator.prototype,
+  $.toArray,
+  function value<T>(this: Iterator<T>) {
+    const result: T[] = [];
+    for (
+      let { done, value } = this.next();
+      !done;
+      ({ done, value } = this.next())
+    ) {
+      result.push(value);
+    }
+    return result;
+  },
+);

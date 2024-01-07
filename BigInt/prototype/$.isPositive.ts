@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/isPositive.ts";
-
-function value(this: bigint) {
-  return this > 0n;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface BigInt {
-    [$.isPositive]: typeof value;
+    [$.isPositive](): boolean;
   }
 }
 
-Object.defineProperty(BigInt.prototype, $.isPositive, { value });
+Object[$.defineDataProperty](
+  BigInt.prototype,
+  $.isPositive,
+  function(this: bigint) {
+    return this > 0n;
+  },
+);

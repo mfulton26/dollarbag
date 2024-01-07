@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/isPositive.ts";
-
-function value(this: number) {
-  return Object.is(this, 0) || this > 0;
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.isPositive]: typeof value;
+    [$.isPositive](): boolean;
   }
 }
 
-Object.defineProperty(Number.prototype, $.isPositive, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.isPositive,
+  function value(this: number) {
+    return Object.is(this, 0) || this > 0;
+  },
+);

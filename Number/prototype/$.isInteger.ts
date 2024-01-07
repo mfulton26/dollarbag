@@ -1,14 +1,17 @@
 import $ from "💰/$.ts";
 import "💰/$/isInteger.ts";
-
-function value(this: number) {
-  return Number.isInteger(this);
-}
+import "💰/Object/$.defineDataProperty.ts";
 
 declare global {
   interface Number {
-    [$.isInteger]: typeof value;
+    [$.isInteger](): boolean;
   }
 }
 
-Object.defineProperty(Number.prototype, $.isInteger, { value });
+Object[$.defineDataProperty](
+  Number.prototype,
+  $.isInteger,
+  function value(this: number) {
+    return Number.isInteger(this);
+  },
+);

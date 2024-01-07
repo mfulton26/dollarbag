@@ -5,10 +5,10 @@ declare global {
     readonly length: number;
     [index: number]: T;
   }
-  interface TypedArrayConstructor {
-    readonly prototype: TypedArray<unknown>;
+  interface TypedArrayConstructor<R extends TypedArray<T> = never, T = never> {
+    readonly prototype: TypedArray<T>;
     readonly BYTES_PER_ELEMENT: number;
-    from<T>(arrayLike: Iterable<T>): TypedArray<T>;
+    from(arrayLike: Iterable<T>): R;
   }
 
   interface Int8Array extends TypedArray<number> {}
@@ -23,20 +23,31 @@ declare global {
   interface BigInt64Array extends TypedArray<bigint> {}
   interface BigUint64Array extends TypedArray<bigint> {}
 
-  interface Int8ArrayConstructor extends TypedArrayConstructor {}
-  interface Uint8ArrayConstructor extends TypedArrayConstructor {}
-  interface Uint8ClampedArrayConstructor extends TypedArrayConstructor {}
-  interface Int16ArrayConstructor extends TypedArrayConstructor {}
-  interface Uint16ArrayConstructor extends TypedArrayConstructor {}
-  interface Int32ArrayConstructor extends TypedArrayConstructor {}
-  interface Uint32ArrayConstructor extends TypedArrayConstructor {}
-  interface Float32ArrayConstructor extends TypedArrayConstructor {}
-  interface Float64ArrayConstructor extends TypedArrayConstructor {}
-  interface BigInt64ArrayConstructor extends TypedArrayConstructor {
+  interface Int8ArrayConstructor
+    extends TypedArrayConstructor<Int8Array, number> {}
+  interface Uint8ArrayConstructor
+    extends TypedArrayConstructor<Uint8Array, number> {}
+  interface Uint8ClampedArrayConstructor
+    extends TypedArrayConstructor<Uint8Array, number> {}
+  interface Int16ArrayConstructor
+    extends TypedArrayConstructor<Int16Array, number> {}
+  interface Uint16ArrayConstructor
+    extends TypedArrayConstructor<Uint16Array, number> {}
+  interface Int32ArrayConstructor
+    extends TypedArrayConstructor<Int32Array, number> {}
+  interface Uint32ArrayConstructor
+    extends TypedArrayConstructor<Uint32Array, number> {}
+  interface Float32ArrayConstructor
+    extends TypedArrayConstructor<Float32Array, number> {}
+  interface Float64ArrayConstructor
+    extends TypedArrayConstructor<Float64Array, number> {}
+  interface BigInt64ArrayConstructor
+    extends TypedArrayConstructor<BigInt64Array, bigint> {
     // see https://github.com/microsoft/TypeScript/issues/45198
     from(arrayLike: Iterable<bigint>): BigInt64Array;
   }
-  interface BigUint64ArrayConstructor extends TypedArrayConstructor {
+  interface BigUint64ArrayConstructor
+    extends TypedArrayConstructor<BigUint64Array, bigint> {
     // see https://github.com/microsoft/TypeScript/issues/45198
     from(arrayLike: Iterable<bigint>): BigUint64Array;
   }
