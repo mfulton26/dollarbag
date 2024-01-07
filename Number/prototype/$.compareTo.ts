@@ -1,5 +1,3 @@
-import type Comparable from "💰/Comparable.d.ts";
-
 import $ from "💰/$.ts";
 import "💰/$/compareTo.ts";
 
@@ -8,8 +6,9 @@ function value(this: number, other: number): number {
 }
 
 declare global {
-  // deno-lint-ignore no-empty-interface
-  interface Number extends Comparable<Number> {}
+  interface Number {
+    [$.compareTo]: typeof value;
+  }
 }
 
 Object.defineProperty(Number.prototype, $.compareTo, { value });
