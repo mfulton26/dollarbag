@@ -114,6 +114,20 @@ const commands = new Map<string, (...args: unknown[]) => Promise<void>>()
 
 const [commandName, ...args] = Deno.args;
 
+if (commandName === undefined) {
+  console.log(`Usage:
+
+  define key name
+
+    EXAMPLE: define key requireNonzero
+
+  define method name ...targets
+
+    EXAMPLE: define method requireNonzero BigInt.prototype Number.prototype
+`);
+  Deno.exit(-1);
+}
+
 const command = commands.get(commandName);
 
 if (command === undefined) {
