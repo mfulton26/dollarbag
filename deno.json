@@ -1,0 +1,12 @@
+{
+  "exclude": ["node/"],
+  "imports": {
+    "💰/": "./",
+    "dnt": "https://deno.land/x/dnt@0.37.0/mod.ts",
+    "std/": "https://deno.land/std@0.191.0/"
+  },
+  "tasks": {
+    "dnt": "deno run --allow-read --allow-write --allow-net=deno.land --allow-env=DENO_AUTH_TOKENS,DENO_DIR,HOME,XDG_CACHE_HOME  --allow-run=npm .tools/dnt.ts",
+    "test": "deno test --doc"
+  }
+}
